@@ -1,3 +1,6 @@
+import csv
+import datetime
+
 with open('categorii.txt' ,'a' ) as file:
     while True:
         categorie = input('Introduceti o categorie de taskuri.Tastati enter pentru a incheia')
@@ -11,18 +14,20 @@ lista_categorii=[]
 with open('categorii.txt, r') as file:
     while True:
         line=file.readline().replace('\n',"")
-    if not line:
-        break
+        if not line:
+         break
         lista_categorii.append(line)
 
 def validate_category(categorie):
     global lista_categorii
     if categorie not in lista_categorii:
         return False
-print('categoria nu exista, alegeti din categoriile de mai jos')
-print(lista_categprii)
-return True
-return False
+    print('categoria nu exista, alegeti din categoriile de mai jos')
+    print(lista_categprii)
+
+    return True
+
+    return False
 
 # def validate_date(date_string):
 #     try:
