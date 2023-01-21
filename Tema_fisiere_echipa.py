@@ -4,12 +4,12 @@ import datetime
 
  def validate_date(date_string):     """Camelia"""
     try:
-        date = date_time.datetime.strptime('date_string', '%Y-%m-%d')
+        date = date_time.datetime.strptime('date_string', '%Y-%m-%d') #aici date_string nu trebuie sa fie in ghilimele folosesti variabila date_string nu textul 'date_string'
     except Exception as e:
-        print('Data introdusa nu este in formatul corect(yyyy-ll-dd)!', date_string((e))
-        return True
+        print('Data introdusa nu este in formatul corect(yyyy-ll-dd)!', date_string((e)) #aici ca sa afisezi textul exceptiei folosesti str(e) nu date_string(e)
+        return True #in cazul in care gasesti o exceptie trebuie sa intorci False si True in caz contrar
     else:
-
+        #aici trebuie sa intorci True pentru ca esti pe ramura unde data a putut fi parsata si nu se gasesc exceptii
 
     """
     Functie care valideaza daca un string este o data valida
@@ -18,7 +18,7 @@ import datetime
     :return: boolean - True sau False in functie daca string-ul poate fi interpretat ca o data sau nu
     """
 
-    return False
+    return False #partea asta poti sa o stergi
 
 
 def add_categories(category_list, categories_file):  """Camelia"""
@@ -32,20 +32,56 @@ def add_categories(category_list, categories_file):  """Camelia"""
 
     :return: list - lista completa cu toate categoriile (cele existente + cele introduse de la tastatura)
     """
-global categories_file
-if categorii  not in categories_files:
-    print('Categoria nu exista. Introduceti alta categorie')
-    return True
-    return False
 
-list=[cat1,cat2]
-while True
-    with open('categorii.txt','r') as file:
-        list=file.readlinie().replace('\n', '')
+    #tot codul de sub functie trebuie identat cu un tab. cand incepi sa scrii de langa margine codul respectiv e in afara functiei
+
+global categories_file #variabila asta globala nu isi ae sensul. categories_file e dat ca argument al functiei deci poti sa il folosesti in interiorul functiei
+if categorie  not in categories_files:
+    print('Categoria nu exista. Introduceti alta categorie')
+    return True #in momentul in care apelezi return executia functiei se incheie iar valoare returnata e ce urmeaza dupa return
+    return False # in cazul de fata functia ar trebui sa intoarca o lista si nu o valoare True False
+                 #aici lipseste si partea de input care citeste categoria de la tastatura si pe care trebuie sa o asignezi variabilei categorie
+                 #toata construcita ar trebui pusa intr-o structura repetitiva (while) pana cand utilizatorul introduce un text gol sau o categorie valida
+
+
+list=[cat1,cat2] #aici ar trebui sa adaugi categoria citita de la tastatura,  probabil salvata in varibila categorie,  in lista deja existenta (variabila category_list care e primita ca argument al functiei)
+                 #nu e nevoie sa creezi o lista noua si oricum cat1 cat2 nu sunt variabile definite
+
+while True #aici nu e nevoie de o structura repetitiva (isi are sensul mai sus)
+    with open('categorii.txt','r') as file: #aici ar trebui sa deschizi fisiserul cu append ca sa poti adauga in el categoriile citite de la tastatura
+                                            #structura with ar trebui sa inglobeze si bucata de cod in care citesti categoria de la tastatura
+        list=file.readlinie().replace('\n', '') #aici nu trebuie sa citesti din fisier ci sa scrii categoriile citite de la tastatura
         if not line:
             break
             list.append(line)
-    return []
+    return []  #aici ar trebui sa intorci lista de categorii din variabila category_list is nu o lista goala
+
+#am pus mai jos un eemplu de implementare al functiei.
+
+# def add_categories(category_list, categories_file):
+#     """
+#     Functie care citeste de la tastatura un set de categorii pe care le adauga intr-o lista si le salveaza
+#     intr-un fisier. Verifica daca o categorie exista deja si afiseaza un mesaj de eroare
+#
+#     :param category_list: list - lista cu categoriile existenta la care se adauga cele introduse de la tastatura
+#     :param categories_file: string - numele fisiserului cu categoriile existente la care se adauga cele introduse
+#     de la tastatura
+#
+#     :return: list - lista completa cu toate categoriile (cele existente + cele introduse de la tastatura)
+#     """
+#     with open(categories_file, 'a') as file:
+#         while True:
+#             category = input('Introduceti o categorie de task-uri. Tastati enter pentru a incheia: ')
+#             if category == '':
+#                 break
+#             else:
+#                 if category in category_list:
+#                     print("Categoria exista deja!")
+#                     continue
+#                 else:
+#                     file.write(category + "\n")
+#                     category_list.append(category)
+#     return category_list
 
 
 def add_tasks(task_list, category_list, tasks_file):  """Camelia"""
