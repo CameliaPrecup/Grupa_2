@@ -199,6 +199,9 @@ def update_tasks(task_list, filename):
 
     :return: None - nu intoarce nimic
     """
+    with open(filename, "w") as file:
+        csv_writer = csv.writer(file, delimiter=",")
+        csv_writer.writerows(task_list)
 
     return
 
@@ -352,13 +355,22 @@ def show_delete_menu(tasks: list):
     :return: list - lista de task-uri ramase
     """
 
-    taskName = "task 3"
+    list_tasks(tasks)
 
-    tasks.remove(list(filter(lambda x: x[0] == taskName, tasks))[0])
-    print("Taskul a fost sters cu succes!")
-    print(tasks)
+    while True:
+        taskName = input("introduceti numele task-ului pe care vreti sa il stergeti!: ")
+        if taskName == "":
+            return tasks
+        filtered_list = list(filter(lambda x: x[0] == taskName, tasks))
+        if not filtered_list:
+            print("Taskul nu exista!")
+            continue
+        else:
+            tasks.remove(filtered_list[0])
+            print("Taskul a fost sters cu succes!")
+            return tasks
 
-    return tasks
+
 
 # -------------------------------------------------------------------------------------------------------------
 # ---------------------------------------  END OF FUNCTIONS DEFINITIONS ---------------------------------------
