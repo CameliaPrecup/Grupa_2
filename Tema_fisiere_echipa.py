@@ -91,7 +91,16 @@ def add_tasks(task_list, category_list, tasks_file): #Camelia
     """
     with open(tasks_file, "a") as file:
         while True:
-            descriere = input("Introduceti un task.Tastati enter pentru a incheia:")
+            while True:
+                descriere = input("Introduceti un task.Tastati enter pentru a incheia:")
+                filtered_list = list(filter(lambda x: x[0] == descriere, task_list))
+                if filtered_list:
+                    print("Taskul exista deja!")
+                else:
+                    break
+                if descriere == "":
+                    break
+
             if descriere == "":
                 break
 
@@ -156,8 +165,7 @@ def load_tasks(filename):
     """
 
     with open(filename, "r") as file:
-        csv_reader = csv.reader()
-    return []
+        return list(csv.reader(file, delimiter=","))
 
 
 def list_tasks(task_list, sort_field="", reverse=False):
@@ -205,6 +213,8 @@ se știe ce informație urmează să editeze utilizatorul)
 
     :return: int - numarul optiunii introduse de utilzator sau False in cazul in care utilizatorul introduce un text gol
     """
+
+
     return False
 
 
@@ -286,6 +296,7 @@ tasks_file = "taskuri.csv"
 
 category_list = load_categories(categories_file)
 add_categories(category_list, categories_file)
+
 task_list = load_tasks(tasks_file)
 add_tasks(task_list, category_list, tasks_file)
 
