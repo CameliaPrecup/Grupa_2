@@ -224,7 +224,29 @@ inițială de date, astfel încât din lista inițială să rămână doar datel
     intoarce False, False in cazul in care utilizatorul introduce un text gol
 
     """
-    return False, False
+    while True:
+        print('[1] - Task ')
+        print('[2] - Dată ')
+        print('[3] - Persoană responsabilă ')
+        print('[4] - Categorie ')
+        filter_field = input("Alegeti campul dupa care vreti sa filtrati: ")
+
+        if filter_field == '':
+            return False, False
+        elif not filter_field.isdigit():
+            print("Trebuie sa introduceti o cifra de la 1 la 4!")
+            continue
+        elif int(filter_field) < 1 or int(filter_field) > 4:
+            print("Optiunea nu exista!")
+            continue
+        else:
+            break
+
+    filter_text = input("Introduceti textul dupa care se va face filtrarea!. Enter pentru a va intoarce la meniul anterior: ")
+    if filter_field == '':
+        return False, False
+
+    return int(filter_field)-1, filter_text
 
 
 def show_edit_menu(task_list, category_list):
@@ -242,7 +264,7 @@ def show_edit_menu(task_list, category_list):
     return task_list
 
 
-def show_delete_menu(task_list):
+def show_delete_menu(tasks: list):
     """
     Functie care afiseaza submeniul de stergere si sterge un task ales de utilizator dintr-o lista existenta
 
@@ -250,7 +272,13 @@ def show_delete_menu(task_list):
     :return: list - lista de task-uri ramase
     """
 
-    return task_list
+    taskName = "task 3"
+
+    tasks.remove(list(filter(lambda x: x[0] == taskName, tasks))[0])
+    print("Taskul a fost sters cu succes!")
+    print(tasks)
+
+    return tasks
 
 # -------------------------------------------------------------------------------------------------------------
 # ---------------------------------------  END OF FUNCTIONS DEFINITIONS ---------------------------------------
@@ -295,7 +323,7 @@ while True:
     elif menu_choice == 3:
         filter_index, filter_text = show_filter_menu(task_fields)
         if filter_index is not False:
-            continue #listeaza lista filtrata in functie de filter_text si filter_index
+            list_tasks(list(filter(lambda x: filter_text in x[filter_index], task_list)))
     elif menu_choice == 4:
         add_tasks(task_list, category_list, tasks_file)
     elif menu_choice == 5:
