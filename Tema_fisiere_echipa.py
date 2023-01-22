@@ -168,7 +168,7 @@ def load_tasks(filename):
         return list(csv.reader(file, delimiter=","))
 
 
-def list_tasks(task_list, sort_field="", reverse=False):
+def list_tasks(tasks, sortby="", reverse=False):
     """
     Functie care ordoneaza si afiseaza o lista de taskuri
 
@@ -179,6 +179,12 @@ def list_tasks(task_list, sort_field="", reverse=False):
 
     :return: None - nu intoarce nimi
     """
+    if sortby in task_fields:
+        tasks.sort(key=lambda x: x[task_fields.index(sortby)])
+
+
+    for task in tasks:
+        print(task)
 
     return
 
@@ -213,9 +219,27 @@ se știe ce informație urmează să editeze utilizatorul)
 
     :return: int - numarul optiunii introduse de utilzator sau False in cazul in care utilizatorul introduce un text gol
     """
+    print('[1] - Listare ordonata date ')
+    print('[2] - Sortare date')
+    print('[3] - Filtrare date ')
+    print('[4] - Adaugare task nou ')
+    print('[5] - Editare detalii ')
+    print('[6] - Stergere task ')
+    print('[0] - Iesire! ')
 
-
-    return False
+    while True:
+        main_option = input('Introduceti optiunea. Tastati enter pentru a incheia: ')
+        if main_option == '':
+            return False
+        elif not main_option.isdigit():
+            print("Nu ai introdus un numar!")
+            continue
+        elif int(main_option) < 1 or int(main_option) > 6:
+            print("Optiunea introdusa nu exista!")
+            continue
+        else:
+            break
+    return int(main_option)
 
 
 def show_sort_menu():
@@ -234,6 +258,8 @@ Criteriile disponibile sunt:
 
     :return: int - numarul optiunii introduse de utilzator sau False in cazul in care utilizatorul introduce un text gol
     """
+
+
     return False
 
 
@@ -290,7 +316,7 @@ def show_delete_menu(task_list):
 # -------------------------------------------------------------------------------------------------------------
 
 
-task_fields = ('descriere', 'data', 'persoana', 'categorie')
+task_fields = ('task', 'data', 'persoana', 'categorie')
 categories_file = "categorii.txt"
 tasks_file = "taskuri.csv"
 
@@ -299,6 +325,8 @@ add_categories(category_list, categories_file)
 
 task_list = load_tasks(tasks_file)
 add_tasks(task_list, category_list, tasks_file)
+
+print(task_list)
 
 while True:
     menu_choice = show_menu()
@@ -309,9 +337,9 @@ while True:
     elif menu_choice == 2:
         submenu_choice = show_sort_menu()
         if submenu_choice == 1:
-            list_tasks(task_list, "descriere")
+            list_tasks(task_list, "task")
         elif submenu_choice == 2:
-            list_tasks(task_list, "descriere", True)
+            list_tasks(task_list, "task", True)
         elif submenu_choice == 3:
             list_tasks(task_list, "data")
         elif submenu_choice == 4:
