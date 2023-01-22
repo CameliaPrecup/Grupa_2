@@ -106,7 +106,7 @@ def add_tasks(task_list, category_list, tasks_file):  """Camelia"""
         if validate_category(categorii):
             break
 
-    return []
+    return task_list
 
 csv_writer=csv.writer(file, delimiter=',')
 csv_writer.writerow([add_tasks(), end_date, responsible, category])
