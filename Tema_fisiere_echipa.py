@@ -2,11 +2,11 @@ import csv
 import datetime
 
 
- def validate_date(date_string):     """Camelia"""
+def validate_date(date_string): #Camelia
     try:
-        date = date_time.datetime.strptime(date_string, '%Y-%m-%d')
+        date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
     except Exception as e:
-        print('Data introdusa nu este in formatul corect(yyyy-ll-dd)!', str((e))
+        print(       'Data introdusa nu este in formatul corect(yyyy-ll-dd)!', str(e)      )
         return False
     else:
         return True
@@ -21,7 +21,7 @@ import datetime
 
 
 
-def add_categories(category_list, categories_file):  """Camelia"""
+def add_categories(category_list, categories_file): #Camelia
     """
     Functie care citeste de la tastatura un set de categorii pe care le adauga intr-o lista si le salveaza
     intr-un fisier. Verifica daca o categorie exista deja si afiseaza un mesaj de eroare
@@ -34,21 +34,21 @@ def add_categories(category_list, categories_file):  """Camelia"""
     """
     with open(categories_file, 'a')as file :
         while True:
-            category=input('Introduceti o categorie de task-uri.Tstati enter pentru a  incheia:')
+            category=input('Introduceti o categorie de task-uri.Tastati enter pentru a  incheia:')
             if category=='':
                 break
             else:
                 if category in category_list:
                     print('Categoria exista deja:!')
                     continue
-                    else
+                else:
                     file.write(category+'\n')
                     category_list.append(category)
-                    retun category_list:
+                    print(category_list)
+    return category_list
 
-            if category  not in categories_list:
-                print('Categoria nu exista. Introduceti alta categorie')
-                return category_list:
+
+
 
 #am pus mai jos un eemplu de implementare al functiei.
 
@@ -78,7 +78,7 @@ def add_categories(category_list, categories_file):  """Camelia"""
 #     return category_list
 
 
-def add_tasks(task_list, category_list, tasks_file):  """Camelia"""
+def add_tasks(task_list, category_list, tasks_file): #Camelia
     """
     Functie care citeste un task de la tastatura si pe care il adauga intr-o lista existenta si il salveaza intr-un
     fisier
@@ -89,30 +89,47 @@ def add_tasks(task_list, category_list, tasks_file):  """Camelia"""
 
     :return: list - lista completa cu toate task-urile (cele existente + cele introduse de la tastatura)
     """
-    while open('taskuri.csv') as file:
+    with open(tasks_file, "a") as file:
         while True:
-        task = input("Introduceti un task.Tastati enter pentru a incheia:")
-        if task ==" ":
-            break
-        while True:
-        end_date= input("Introduceti data limita:")
-        break
-        responsible= input("Introduceti o persoana responsabila:")
-        if responsible=="":
-        break
+            descriere = input("Introduceti un task.Tastati enter pentru a incheia:")
+            if descriere == "":
+                break
 
-    while True:
-        category= input("Introduceti o categorie:")
-        if validate_category(categorii):
-            break
+            while True:
+                end_date = input("Introduceti data limita. Tastati enter pentru a incheia:")
+                if validate_date(end_date) or end_date == "":
+                    break
 
-    return []
+            if end_date == "":
+                break
 
-csv_writer=csv.writer(file, delimiter=',')
-csv_writer.writerow([add_tasks(), end_date, responsible, category])
-next_category=input('Introduceti alta categorie?(Y/N):')
-    if next_category.lower():='y':
-    break
+            responsible = input("Introduceti o persoana responsabila. Tastati enter pentru a incheia:")
+            if responsible == "":
+                break
+
+            while True:
+                category = input("Introduceti o categorie. Tastati enter oentru a incheia:")
+                if category == "":
+                    break
+                elif category not in category_list:
+                    print("Categoria nu exista in lista. Trebuie sa introduci una din categoriile de mai jos:")
+                    print(category_list)
+                else:
+                    break
+            if category == "":
+                break
+
+            csv_writer = csv.writer(file, delimiter=",")
+            csv_writer.writerow([descriere, end_date, responsible, category])
+            task_list.append([descriere, end_date, responsible, category])
+
+            next_category = input('Introduceti alt task? (Y/N): ')
+            if next_category.lower() != 'y':
+                break
+    return task_list
+
+
+
 
 
 def load_categories(filename):
@@ -122,7 +139,12 @@ def load_categories(filename):
     :param filename: string - numele fisiserului din care se citesc categoriile
     :return: list - lista cu categoriile citite sau o lista goala daca fisiserul nu exista sau e gol
     """
-    return []
+
+    with open(filename, "r") as file:
+        category = file.readlines()
+    category = list(map(lambda x: x.replace("\n", ""), category))
+    return category
+
 
 
 def load_tasks(filename):
@@ -132,6 +154,9 @@ def load_tasks(filename):
     :param filename: string - numele fisierului din care se citesc task-urile
     :return: list - lista cu task-urile citite sau o lista goala daca fisierul nu exista sau e gol
     """
+
+    with open(filename, "r") as file:
+        csv_reader = csv.reader()
     return []
 
 
