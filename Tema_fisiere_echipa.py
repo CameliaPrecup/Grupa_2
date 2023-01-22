@@ -180,7 +180,7 @@ def list_tasks(tasks, sortby="", reverse=False):
     :return: None - nu intoarce nimi
     """
     if sortby in task_fields:
-        tasks.sort(key=lambda x: x[task_fields.index(sortby)])
+        tasks.sort(key=lambda x: x[task_fields.index(sortby)], reverse=reverse)
 
 
     for task in tasks:
@@ -225,7 +225,6 @@ se știe ce informație urmează să editeze utilizatorul)
     print('[4] - Adaugare task nou ')
     print('[5] - Editare detalii ')
     print('[6] - Stergere task ')
-    print('[0] - Iesire! ')
 
     while True:
         main_option = input('Introduceti optiunea. Tastati enter pentru a incheia: ')
@@ -258,32 +257,32 @@ Criteriile disponibile sunt:
 
     :return: int - numarul optiunii introduse de utilzator sau False in cazul in care utilizatorul introduce un text gol
     """
-    print('[1] - Sortare ascendentă task ')
-    print('[2] - Sortare descendentă task ')
-    print('[3] - Sortare ascendentă data ')
-    print('[4] - Sortare desscendentă data ')
-    print('[5] - Sortare ascendentă persoana responsabilă ')
-    print('[6] - Sortare descendentă persoană responsabilă ')
-    print('[7] - Sortare ascendentă categorie! ')
-    print('[8] - Sortare descendentă categorie ')
 
-    sub_menu_sortare_optiune = int(input('Introduceti optiunea: '))
+    while True:
+        print('[1] - Sortare ascendentă task ')
+        print('[2] - Sortare descendentă task ')
+        print('[3] - Sortare ascendentă data ')
+        print('[4] - Sortare desscendentă data ')
+        print('[5] - Sortare ascendentă persoana responsabilă ')
+        print('[6] - Sortare descendentă persoană responsabilă ')
+        print('[7] - Sortare ascendentă categorie! ')
+        print('[8] - Sortare descendentă categorie ')
 
-    submenu_choice = input("Alege una din optiunile de mai sus (1-8). "
-                           "Tasteaza enter pentru a te intoarce la meniul anterior: ")
-    if submenu_choice == '':
-        return False
-    elif not submenu_choice.isdigit():
-        print("Trebuie sa introduceti o cifra de la 1 la 8!")
-        continue
-    elif int(submenu_choice) < 1 or int(submenu_choice) > 8:
-        print("Trebuie sa introduceti o cifra de la 1 la 8!")
-        continue
-    else:
-        break
 
-    return False
+        submenu_choice = input("Alege una din optiunile de mai sus (1-8). "
+                               "Tasteaza enter pentru a te intoarce la meniul anterior: ")
+        if submenu_choice == '':
+            return False
+        elif not submenu_choice.isdigit():
+            print("Trebuie sa introduceti o cifra de la 1 la 8!")
+            continue
+        elif int(submenu_choice) < 1 or int(submenu_choice) > 8:
+            print("Trebuie sa introduceti o cifra de la 1 la 8!")
+            continue
+        else:
+            break
 
+    return int(submenu_choice)
 
 def show_filter_menu(task_fields):
     """
