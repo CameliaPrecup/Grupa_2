@@ -4,12 +4,12 @@ import datetime
 
  def validate_date(date_string):     """Camelia"""
     try:
-        date = date_time.datetime.strptime('date_string', '%Y-%m-%d') #aici date_string nu trebuie sa fie in ghilimele folosesti variabila date_string nu textul 'date_string'
+        date = date_time.datetime.strptime(date_string, '%Y-%m-%d')
     except Exception as e:
-        print('Data introdusa nu este in formatul corect(yyyy-ll-dd)!', date_string((e)) #aici ca sa afisezi textul exceptiei folosesti str(e) nu date_string(e)
-        return True #in cazul in care gasesti o exceptie trebuie sa intorci False si True in caz contrar
+        print('Data introdusa nu este in formatul corect(yyyy-ll-dd)!', str((e))
+        return False
     else:
-        #aici trebuie sa intorci True pentru ca esti pe ramura unde data a putut fi parsata si nu se gasesc exceptii
+        return True
 
     """
     Functie care valideaza daca un string este o data valida
@@ -18,7 +18,7 @@ import datetime
     :return: boolean - True sau False in functie daca string-ul poate fi interpretat ca o data sau nu
     """
 
-    return False #partea asta poti sa o stergi
+
 
 
 def add_categories(category_list, categories_file):  """Camelia"""
@@ -32,11 +32,7 @@ def add_categories(category_list, categories_file):  """Camelia"""
 
     :return: list - lista completa cu toate categoriile (cele existente + cele introduse de la tastatura)
     """
-
-    #tot codul de sub functie trebuie identat cu un tab. cand incepi sa scrii de langa margine codul respectiv e in afara functiei
-
-global categories_file #variabila asta globala nu isi ae sensul. categories_file e dat ca argument al functiei deci poti sa il folosesti in interiorul functiei
-if categorie  not in categories_files:
+    if categorie  not in categories_files:
     print('Categoria nu exista. Introduceti alta categorie')
     return True #in momentul in care apelezi return executia functiei se incheie iar valoare returnata e ce urmeaza dupa return
     return False # in cazul de fata functia ar trebui sa intoarca o lista si nu o valoare True False
@@ -47,8 +43,8 @@ if categorie  not in categories_files:
 list=[cat1,cat2] #aici ar trebui sa adaugi categoria citita de la tastatura,  probabil salvata in varibila categorie,  in lista deja existenta (variabila category_list care e primita ca argument al functiei)
                  #nu e nevoie sa creezi o lista noua si oricum cat1 cat2 nu sunt variabile definite
 
-while True #aici nu e nevoie de o structura repetitiva (isi are sensul mai sus)
-    with open('categorii.txt','r') as file: #aici ar trebui sa deschizi fisiserul cu append ca sa poti adauga in el categoriile citite de la tastatura
+    while True #aici nu e nevoie de o structura repetitiva (isi are sensul mai sus)
+      with open('categorii.txt','r') as file: #aici ar trebui sa deschizi fisiserul cu append ca sa poti adauga in el categoriile citite de la tastatura
                                             #structura with ar trebui sa inglobeze si bucata de cod in care citesti categoria de la tastatura
         list=file.readlinie().replace('\n', '') #aici nu trebuie sa citesti din fisier ci sa scrii categoriile citite de la tastatura
         if not line:
@@ -95,12 +91,12 @@ def add_tasks(task_list, category_list, tasks_file):  """Camelia"""
 
     :return: list - lista completa cu toate task-urile (cele existente + cele introduse de la tastatura)
     """
-while open('taskuri.csv') as file:
-    while True:
+    while open('taskuri.csv') as file:
+        while True:
         task = input("Introduceti un task.Tastati enter pentru a incheia:")
         if task ==" ":
             break
-    while True:
+        while True:
         end_date= input("Introduceti data limita:")
         break
         responsible= input("Introduceti o persoana responsabila:")
@@ -117,7 +113,7 @@ while open('taskuri.csv') as file:
 csv_writer=csv.writer(file, delimiter=',')
 csv_writer.writerow([add_tasks(), end_date, responsible, category])
 next_category=input('Introduceti alta categorie?(Y/N):')
-if next_category.lower():='y':
+    if next_category.lower():='y':
     break
 
 
