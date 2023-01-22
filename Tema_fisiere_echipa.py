@@ -117,7 +117,7 @@ def add_tasks(task_list, category_list, tasks_file): #Camelia
                 break
 
             while True:
-                category = input("Introduceti o categorie. Tastati enter oentru a incheia:")
+                category = input("Introduceti o categorie. Tastati enter pentru a incheia:")
                 if category == "":
                     break
                 elif category not in category_list:
@@ -182,10 +182,8 @@ def list_tasks(tasks, sortby="", reverse=False):
     if sortby in task_fields:
         tasks.sort(key=lambda x: x[task_fields.index(sortby)], reverse=reverse)
 
-
-    for task in tasks:
-        print(task)
-
+    for i in range(len(tasks)):
+        print(f"{i+1}. Task: {tasks[i][0]}, data: {tasks[i][1]}, persoana responsabila: {tasks[i][2]}, categoria: {tasks[i][3]}.")
     return
 
 
@@ -332,7 +330,7 @@ inițială de date, astfel încât din lista inițială să rămână doar datel
     return int(filter_field)-1, filter_text
 
 
-def show_edit_menu(task_list, category_list):
+def show_edit_menu(tasks, category_list):
     """
     Functie care afiseaza submeniu de editare si modifica un task ales de utilizator dintr-o lista existenta
     Editeaza detaliilor referitoare la task, dată, persoană sau categorie dintr-un anumit task ales de utilizator de la
@@ -343,6 +341,18 @@ def show_edit_menu(task_list, category_list):
     :param category_list: list - lista de categorii folosita pentru validarea categoriei introduse de utilzator
     :return: task_list: list - lista de task-uri cu task-ul modificat de utilizator
     """
+    list_tasks(tasks)
+
+    while True:
+
+
+        taskName = input("introduceti numele task-ului pe care vreti sa il editati!: ")
+        if taskName == "":
+            return tasks
+        filtered_list = list(filter(lambda x: x[0] == taskName, tasks))
+        if not filtered_list:
+            print("Taskul nu exista!")
+            continue
 
     return task_list
 
@@ -386,8 +396,6 @@ add_categories(category_list, categories_file)
 
 task_list = load_tasks(tasks_file)
 add_tasks(task_list, category_list, tasks_file)
-
-print(task_list)
 
 while True:
     menu_choice = show_menu()
