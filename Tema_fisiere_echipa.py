@@ -32,23 +32,25 @@ def add_categories(category_list, categories_file):  """Camelia"""
 
     :return: list - lista completa cu toate categoriile (cele existente + cele introduse de la tastatura)
     """
-    with open(categories_file, 'a')as file :
-        while True:
-            category=input('Introduceti o categorie de task-uri.Tstati enter pentru a  incheia:')
-            if category=='':
-                break
-            else:
-                if category in category_list:
-                    print('Categoria exista deja:!')
-                    continue
-                    else
-                    file.write(category+'\n')
-                    category_list.append(category)
-                    retun category_list:
+    if categorie  not in categories_files:
+    print('Categoria nu exista. Introduceti alta categorie')
+    return True #in momentul in care apelezi return executia functiei se incheie iar valoare returnata e ce urmeaza dupa return
+    return False # in cazul de fata functia ar trebui sa intoarca o lista si nu o valoare True False
+                 #aici lipseste si partea de input care citeste categoria de la tastatura si pe care trebuie sa o asignezi variabilei categorie
+                 #toata construcita ar trebui pusa intr-o structura repetitiva (while) pana cand utilizatorul introduce un text gol sau o categorie valida
 
-            if category  not in categories_list:
-                print('Categoria nu exista. Introduceti alta categorie')
-                return category_list:
+
+list=[cat1,cat2] #aici ar trebui sa adaugi categoria citita de la tastatura,  probabil salvata in varibila categorie,  in lista deja existenta (variabila category_list care e primita ca argument al functiei)
+                 #nu e nevoie sa creezi o lista noua si oricum cat1 cat2 nu sunt variabile definite
+
+    while True #aici nu e nevoie de o structura repetitiva (isi are sensul mai sus)
+      with open('categorii.txt','r') as file: #aici ar trebui sa deschizi fisiserul cu append ca sa poti adauga in el categoriile citite de la tastatura
+                                            #structura with ar trebui sa inglobeze si bucata de cod in care citesti categoria de la tastatura
+        list=file.readlinie().replace('\n', '') #aici nu trebuie sa citesti din fisier ci sa scrii categoriile citite de la tastatura
+        if not line:
+            break
+            list.append(line)
+    return []  #aici ar trebui sa intorci lista de categorii din variabila category_list is nu o lista goala
 
 #am pus mai jos un eemplu de implementare al functiei.
 
@@ -106,7 +108,7 @@ def add_tasks(task_list, category_list, tasks_file):  """Camelia"""
         if validate_category(categorii):
             break
 
-    return task_list
+    return []
 
 csv_writer=csv.writer(file, delimiter=',')
 csv_writer.writerow([add_tasks(), end_date, responsible, category])
