@@ -3,22 +3,19 @@ import datetime
 
 
 def validate_date(date_string): #Camelia
-    try:
-        date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
-    except Exception as e:
-        print(       'Data introdusa nu este in formatul corect(yyyy-ll-dd)!', str(e)      )
-        return False
-    else:
-        return True
-
     """
     Functie care valideaza daca un string este o data valida
 
     :param date_string: string - textul care trebuie validat
     :return: boolean - True sau False in functie daca string-ul poate fi interpretat ca o data sau nu
     """
-
-
+    try:
+        date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+    except Exception as e:
+        print('Data introdusa nu este in formatul corect(yyyy-ll-dd)!', str(e))
+        return False
+    else:
+        return True
 
 
 def add_categories(category_list, categories_file): #Camelia
@@ -172,8 +169,8 @@ def list_tasks(tasks, sortby="", reverse=False):
     """
     Functie care ordoneaza si afiseaza o lista de taskuri
 
-    :param task_list: list - Lista de task-uri care trebuie sortata si afisata
-    :param sort_field: string - campul folosit pentru sortare (in cazul in care acest parametru este un string gol
+    :param tasks: list - Lista de task-uri care trebuie sortata si afisata
+    :param sortby: string - campul folosit pentru sortare (in cazul in care acest parametru este un string gol
     lista nu va fi sortata)
     :param reverse: boolean - True sau False in cazul in care sortarea se va face descendent sau nu
 
@@ -337,21 +334,56 @@ def show_edit_menu(tasks, category_list):
     tastatură (când se cere această opțiune, se va lista lista de taskuri cu un identificator unic pe rand, astfel încât
     să se știe ce informație urmează să editeze utilizatorul)
 
-    :param task_list: list - lista de task-uri pe care utilizatorul le va putea edita
+    :param tasks: list - lista de task-uri pe care utilizatorul le va putea edita
     :param category_list: list - lista de categorii folosita pentru validarea categoriei introduse de utilzator
     :return: task_list: list - lista de task-uri cu task-ul modificat de utilizator
     """
     list_tasks(tasks)
 
     while True:
+        task_id = input("introduceti id-ul task-ului pe care vreti sa il editati!. Tastati enter pentru a va intoarce la meniul anterior: ")
 
+        if task_id == '':
+            return False
+        elif not task_id.isdigit():
+            print(f"Trebuie sa introduceti o cifra de la 1 la {len(tasks)}!")
+            continue
+        elif int(task_id) < 1 or int(task_id) > len(tasks):
+            print("Task-ul cu id-ul introdus nu exista!")
+            continue
+        else:
+            break
 
-        taskName = input("introduceti numele task-ului pe care vreti sa il editati!: ")
-        if taskName == "":
-            return tasks
-        filtered_list = list(filter(lambda x: x[0] == taskName, tasks))
-        if not filtered_list:
-            print("Taskul nu exista!")
+    task_id = int(task_id)
+
+    descriere = input(f"Introduceti noua descriere! Tastati enter pentru a lasa lafel ({tasks[task_id-1][0]}): ")
+    if descriere != "":
+        tasks[task_id - 1][0] = descriere
+
+    while True:
+        data_limita = input(f"Introduceti noua data limita! Tastati enter pentru a lasa lafel ({tasks[task_id - 1][1]}): ")
+        if data_limita == "":
+            break
+        elif validate_date(data_limita):
+            tasks[task_id - 1][1] = data_limita
+            break
+        else:
+            continue
+
+    persoana = input(f"Introduceti noua persoana responsabila! Tastati enter pentru a lasa lafel ({tasks[task_id-1][2]}): ")
+    if persoana != "":
+        tasks[task_id - 1][2] = persoana
+
+    while True:
+        categorie = input(f"Introduceti noua categorie! Tastati enter pentru a lasa lafel ({tasks[task_id - 1][3]}): ")
+        if categorie == "":
+            break
+        elif categorie in category_list:
+            tasks[task_id - 1][3] = categorie
+            break
+        else:
+            print("Categoria nu se afla in lista. Introduceti una din categoriile de mai jos:")
+            print(category_list)
             continue
 
     return task_list
@@ -361,7 +393,7 @@ def show_delete_menu(tasks: list):
     """
     Functie care afiseaza submeniul de stergere si sterge un task ales de utilizator dintr-o lista existenta
 
-    :param task_list: list - lista de task-uri pe care utilizatorul le va putea sterge
+    :param tasks: list - lista de task-uri pe care utilizatorul le va putea sterge
     :return: list - lista de task-uri ramase
     """
 
