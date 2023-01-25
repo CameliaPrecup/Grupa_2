@@ -10,12 +10,15 @@ def validate_date(date_string): #Camelia
     :return: boolean - True sau False in functie daca string-ul poate fi interpretat ca o data sau nu
     """
     try:
-        date = datetime.datetime.strptime(date_string, '%Y-%m-%d')
+        date = datetime.datetime.strptime(date_string, '%Y-%m-%d %H:%M')
     except Exception as e:
-        print('Data introdusa nu este in formatul corect(yyyy-ll-dd)!', str(e))
+        print('Data introdusa nu este in formatul corect(YYYY-mm-dd HH:MM)!', str(e))
         return False
     else:
-        return True
+        if date < datetime.datetime.now():
+            print('Data introdusa este in trecut!')
+            return False
+    return True
 
 
 def add_categories(category_list, categories_file): #Camelia
@@ -72,7 +75,7 @@ def add_tasks(task_list, tasks_file): #Camelia
                 break
 
             while True:
-                end_date = input("Introduceti data limita. Tastati enter pentru a incheia:")
+                end_date = input("Introduceti data limita (YYYY-mm-dd HH:MM). Tastati enter pentru a incheia:")
                 if validate_date(end_date) or end_date == "":
                     break
 
@@ -314,7 +317,7 @@ def show_edit_menu(tasks):
         task_id = input("introduceti id-ul task-ului pe care vreti sa il editati!. Tastati enter pentru a va intoarce la meniul anterior: ")
 
         if task_id == '':
-            return False
+            return tasks
         elif not task_id.isdigit():
             print(f"Trebuie sa introduceti o cifra de la 1 la {len(tasks)}!")
             continue
@@ -331,7 +334,7 @@ def show_edit_menu(tasks):
         tasks[task_id - 1][0] = descriere
 
     while True:
-        data_limita = input(f"Introduceti noua data limita! Tastati enter pentru a lasa lafel ({tasks[task_id - 1][1]}): ")
+        data_limita = input(f"Introduceti noua data limita (YYYY-mm-dd HH:MM! Tastati enter pentru a lasa lafel ({tasks[task_id - 1][1]}): ")
         if data_limita == "":
             break
         elif validate_date(data_limita):
