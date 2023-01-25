@@ -45,36 +45,6 @@ def add_categories(category_list, categories_file): #Camelia
     return category_list
 
 
-
-
-#am pus mai jos un eemplu de implementare al functiei.
-
-# def add_categories(category_list, categories_file):
-#     """
-#     Functie care citeste de la tastatura un set de categorii pe care le adauga intr-o lista si le salveaza
-#     intr-un fisier. Verifica daca o categorie exista deja si afiseaza un mesaj de eroare
-#
-#     :param category_list: list - lista cu categoriile existenta la care se adauga cele introduse de la tastatura
-#     :param categories_file: string - numele fisiserului cu categoriile existente la care se adauga cele introduse
-#     de la tastatura
-#
-#     :return: list - lista completa cu toate categoriile (cele existente + cele introduse de la tastatura)
-#     """
-#     with open(categories_file, 'a') as file:
-#         while True:
-#             category = input('Introduceti o categorie de task-uri. Tastati enter pentru a incheia: ')
-#             if category == '':
-#                 break
-#             else:
-#                 if category in category_list:
-#                     print("Categoria exista deja!")
-#                     continue
-#                 else:
-#                     file.write(category + "\n")
-#                     category_list.append(category)
-#     return category_list
-
-
 def add_tasks(task_list, tasks_file): #Camelia
     """
     Functie care citeste un task de la tastatura si pe care il adauga intr-o lista existenta si il salveaza intr-un
