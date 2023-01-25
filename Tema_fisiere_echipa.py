@@ -75,7 +75,7 @@ def add_categories(category_list, categories_file): #Camelia
 #     return category_list
 
 
-def add_tasks(task_list, category_list, tasks_file): #Camelia
+def add_tasks(task_list, tasks_file): #Camelia
     """
     Functie care citeste un task de la tastatura si pe care il adauga intr-o lista existenta si il salveaza intr-un
     fisier
@@ -171,7 +171,7 @@ def list_tasks(tasks, sortby="", reverse=False):
 
     :param tasks: list - Lista de task-uri care trebuie sortata si afisata
     :param sortby: string - campul folosit pentru sortare (in cazul in care acest parametru este un string gol
-    lista nu va fi sortata)
+    sau nu exista in lista de campuri predefinita - task_fields - lista nu va fi sortata)
     :param reverse: boolean - True sau False in cazul in care sortarea se va face descendent sau nu
 
     :return: None - nu intoarce nimi
@@ -327,7 +327,7 @@ inițială de date, astfel încât din lista inițială să rămână doar datel
     return int(filter_field)-1, filter_text
 
 
-def show_edit_menu(tasks, category_list):
+def show_edit_menu(tasks):
     """
     Functie care afiseaza submeniu de editare si modifica un task ales de utilizator dintr-o lista existenta
     Editeaza detaliilor referitoare la task, dată, persoană sau categorie dintr-un anumit task ales de utilizator de la
@@ -412,8 +412,6 @@ def show_delete_menu(tasks: list):
             print("Taskul a fost sters cu succes!")
             return tasks
 
-
-
 # -------------------------------------------------------------------------------------------------------------
 # ---------------------------------------  END OF FUNCTIONS DEFINITIONS ---------------------------------------
 # -------------------------------------------------------------------------------------------------------------
@@ -427,7 +425,7 @@ category_list = load_categories(categories_file)
 add_categories(category_list, categories_file)
 
 task_list = load_tasks(tasks_file)
-add_tasks(task_list, category_list, tasks_file)
+add_tasks(task_list, tasks_file)
 
 while True:
     menu_choice = show_menu()
@@ -460,9 +458,9 @@ while True:
         if filter_index is not False:
             list_tasks(list(filter(lambda x: filter_text in x[filter_index], task_list)))
     elif menu_choice == 4:
-        add_tasks(task_list, category_list, tasks_file)
+        add_tasks(task_list, tasks_file)
     elif menu_choice == 5:
-        task_list = show_edit_menu(task_list, category_list)
+        task_list = show_edit_menu(task_list)
         update_tasks(task_list, tasks_file)
     elif menu_choice == 6:
         task_list = show_delete_menu(task_list)
